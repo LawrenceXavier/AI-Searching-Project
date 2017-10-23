@@ -3,11 +3,12 @@
 #include "Graph.h"
 #include "DFS.h"
 #include "BFS.h"
+#include "UCS.h"
 
-#define INPUT "input.txt"
-#define DFSout "dfs.txt"
-#define BFSout "bfs.txt"
-#define USCout "usc.txt"
+#define INPUT	"input.txt"
+#define DFSout	"dfs.txt"
+#define BFSout	"bfs.txt"
+#define UCSout	"ucs.txt"
 #define GBFSout "gbfs.txt"
 
 void readGraph(Graph &G) {
@@ -44,5 +45,7 @@ int main(char argc, char* argv[]) {
 	bfs.printOut(BFSout);
 
 	// Run UCS algorithm
+	UCS ucs(&G);
+	ucs.printOut(UCSout);
 	return 0;
 }
