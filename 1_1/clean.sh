@@ -1,0 +1,2 @@
+rm core
+rm main
