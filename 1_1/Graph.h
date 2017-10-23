@@ -3,10 +3,11 @@
 
 #include <cstdlib>
 
+/* Struct that contains a graph */
 struct Graph {
 	int n;
 	int s, t;
-	int** adj;
+	int** adj; // cost matrix
 	int* h; // heuristic function
 	Graph() {
 		this->n = 0;
