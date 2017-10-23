@@ -1,10 +1,10 @@
 #include <cstdio>
 
-#include "Graph.h"
-#include "DFS.h"
-#include "BFS.h"
-#include "UCS.h"
-#include "GBFS.h"
+#include "lib/Graph.h"
+#include "lib/DFS.h"
+#include "lib/BFS.h"
+#include "lib/UCS.h"
+#include "lib/GBFS.h"
 
 #define INPUT	"input.txt"
 #define DFSout	"dfs.txt"
