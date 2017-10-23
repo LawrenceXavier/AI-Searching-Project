@@ -3,82 +3,50 @@
 
 #include "Graph.h"
 #include "SearchAlgo.h"
-#include <ctime>
+#include <queue>
+#include <utility>
+#include <functional>
 
-inline int Random() {
-	int x = rand()%(1 << 16);
-	int y = rand()%16;
-	int z = rand()%(1 << y);
-	return (x << y)^z;
-}
+typedef std::pair<int, int> pii;
+typedef std::vector<int> vi;
 
 struct GBFS: SearchAlgo {
+	static const int Inf = (int)1E9;
+
 	bool* marked;
-	int* ps;
-
-	void swap(int &x, int &y) {
-		int temp = x;
-		x = y;
-		y = temp;
-	}
-	
-	bool key(int u, int v) {
-		return this->G->h[u] < this->G->h[v];
-	}	
-
-	void quickSort(int* arr, int len) {
-		int l = 0, r = len-1;
-		int i = l, j = r;
-		int pvt = arr[Random()%len];
-		do {
-			while (this->key(arr[i], pvt)) ++i;
-			while (this->key(pvt, arr[j])) --j;
-			if (i <= j) {
-				swap(arr[i], arr[j]);
-				++i;
-				--j;
-			}
-		} while (i <= j);
-		if (j > 0) quickSort(arr, j+1);
-		if (i < len-1) quickSort(arr+i, len-i);
-	}		
-
-	bool search(int u) {
-		this->marked[u] = false;
-		this->visited.push_back(u);
-		
-		if (u == this->G->t) return true;	
-	
-		for (int i = 0; i < this->G->n; ++i) {
-			int v = this->ps[i];
-			if (!this->marked[v] && this->G->adj[u][v] > 0) {
-				this->trace[v] = u;
-				if (this->search(v))
-					return true;
-			}
-		}	
-		return false;
-	}	
 
 	void search() {
-		this->search(this->G->s);
+		std::priority_queue< pii, vii, std::greater<pii> > PQ;
+
+		PQ.push(std::make_pair(this->G->h[this->G->s], this->G->s));
+		marked[this->G->s] = true;
+
+		while (!PQ.empty()) {
+			pii t = PQ.top();
+			PQ.pop();
+			
+			int u = t.second;
+			int l = t.first;
+			
+			this->visited.push_back(u);
+			
+			if (u == this->G->t) 
+				break;
+			
+			for (int v = 0; v < this->G->n; ++v) 
+				if (this->G->adj[u][v] > 0 && !this->marked[v]) {
+					this->marked[v] = true;	// can mark here because there is no update of h
+					PQ.push(std::make_pair(this->G->h[v], v));
+					this->trace[v] = u;
+				}
+		}
+	
 	}
 
-	void makeOrder() {
-		for (int i = 0; i < this->G->n; ++i)
-			this->ps[i] = i;
-		this->quickSort(this->ps, this->G->n);
-	}
-	
 	GBFS(Graph* G): SearchAlgo(G) {
-		srand(time(NULL));
 		this->marked = (bool*)calloc(this->G->n, sizeof(bool));
-		this->ps = (int*)calloc(this->G->n, sizeof(int));
-		this->makeOrder();
 		this->search();
 		this->traceBack();
-		free(this->marked);
-		free(this->ps);
 	}
 
 	virtual ~GBFS() {}

@@ -5,12 +5,14 @@
 #include "lib/BFS.h"
 #include "lib/UCS.h"
 #include "lib/GBFS.h"
+#include "lib/ASTAR.h"
 
-#define INPUT	"input.txt"
-#define DFSout	"dfs.txt"
-#define BFSout	"bfs.txt"
-#define UCSout	"ucs.txt"
-#define GBFSout "gbfs.txt"
+#define INPUT		"input.txt"
+#define DFSout		"dfs.txt"
+#define BFSout		"bfs.txt"
+#define UCSout		"ucs.txt"
+#define GBFSout 	"gbfs.txt"
+#define ASTARout	"astar.txt"
 
 void readGraph(Graph &G) {
 	FILE* fi = fopen(INPUT, "r");
@@ -52,5 +54,9 @@ int main(char argc, char* argv[]) {
 	// Run GBFS algorithm
 	GBFS gbfs(&G);
 	gbfs.printOut(GBFSout);
+
+	// Run ASTAR algorithm
+	ASTAR astar(&G);
+	astar.printOut(ASTARout);
 	return 0;
 }

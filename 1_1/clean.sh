@@ -32,5 +32,5 @@ fi
 
 if [ -f astar.txt ]; then
 	echo "Removing astar.txt"
-	rm aster.txt
+	rm astar.txt
 fi
