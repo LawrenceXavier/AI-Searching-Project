@@ -7,18 +7,20 @@
 struct DFS: SearchAlgo {
 	bool* marked;
 
-	void search(int u) {
+	bool search(int u) {
 		this->marked[u] = true;
 		this->visited.push_back(u);
 
-		if (u == G->t) return;
+		if (u == G->t) return true;
 
 		for (int v = 0; v < this->G->n; ++v) {
 			if (!this->marked[v] && this->G->adj[u][v] > 0) {
 				this->trace[v] = u;
-				this->search(v);
+				if (this->search(v))
+					return true;
 			}
 		}
+		return false;
 	}
 
 	void search() {

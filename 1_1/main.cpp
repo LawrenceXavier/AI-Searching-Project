@@ -4,6 +4,7 @@
 #include "DFS.h"
 #include "BFS.h"
 #include "UCS.h"
+#include "GBFS.h"
 
 #define INPUT	"input.txt"
 #define DFSout	"dfs.txt"
@@ -47,5 +48,9 @@ int main(char argc, char* argv[]) {
 	// Run UCS algorithm
 	UCS ucs(&G);
 	ucs.printOut(UCSout);
+
+	// Run GBFS algorithm
+	GBFS gbfs(&G);
+	gbfs.printOut(GBFSout);
 	return 0;
 }

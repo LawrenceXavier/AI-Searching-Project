@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <vector>
 #include <algorithm>
+#include <cstring>
 
 /* SearchAlgo interface */
 struct SearchAlgo {
@@ -25,6 +26,7 @@ struct SearchAlgo {
 	SearchAlgo(Graph* G) {
 		this->G = G;
 		this->trace = (int*)calloc(this->G->n, sizeof(int));
+		memset(this->trace, 255, sizeof(int)*this->G->n);
 	}
 
 	void printOut(const char* fileName) {
