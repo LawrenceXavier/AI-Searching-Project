@@ -46,6 +46,5 @@ void readFile(AllObject* allObj) {
 }
 
 int main(int argc, char* argv[]) {
-	Polygon P;
 	return 0;
 }

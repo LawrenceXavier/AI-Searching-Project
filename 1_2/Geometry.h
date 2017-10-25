@@ -1,6 +1,8 @@
 #ifndef GEOMETRY_COMPONENTS_INCLUDED
 #define GEOMETRY_COMPONENTS_INCLUDED
 
+#include <new>
+
 typedef long long LL;
 typedef LL pcoor;
 
@@ -45,6 +47,10 @@ struct Polygon {
 				return false;
 		}
 		return true;
+	}
+
+	~Polygon() {
+		delete[] P;
 	}
 };
 
