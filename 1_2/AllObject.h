@@ -3,6 +3,7 @@
 
 #include "Geometry.h"
 #include <cstdlib>
+#include <new>
 
 
 struct AllObject {
@@ -33,7 +34,7 @@ struct AllObject {
 		this->O = (Polygon**)calloc(n, sizeof(Polygon*));
 
 		// Make array contain all points (include S and G)
-		this->L = (PointList*)calloc(1, sizeof(PointList));
+		this->L = new PointList();
 
 
 		// Next N groups of lines, each group has the form:
@@ -44,7 +45,7 @@ struct AllObject {
 		
 
 		for (int i = 0; i < n; ++i) { // Read N polygons
-			this->O[i] = (Polygon*)calloc(1, sizeof(Polygon));	// create new polygon
+			this->O[i] = new Polygon();	// create new polygon
 			
 			int m;
 			
@@ -66,8 +67,9 @@ struct AllObject {
 	}
 
 	~AllObject() {
+		delete L;
 		for (int i = 0; i < N; ++i)
-			free(O[i]);
+			delete O[i];
 		free(O);
 	}
 };
