@@ -1,7 +1,8 @@
 #ifndef GEOMETRY_COMPONENTS_INCLUDED
 #define GEOMETRY_COMPONENTS_INCLUDED
 
-#include <new>
+#include <cstdlib>
+#include <cstdio>
 
 typedef long long LL;
 typedef LL pcoor;
@@ -15,6 +16,10 @@ struct TPoint {
 	}
 	TPoint operator - (TPoint other) {  // use as vector
 		return TPoint(other.x-this->x, other.y-this->y);
+	}
+
+	TPoint(FILE* fi) {	// read from file
+		fscanf(fi, "%lld %lld", &this->x, &this->y);
 	}
 };
 
@@ -30,27 +35,44 @@ struct TLine {
 	pcoor calc(TPoint A) {
 		return this->a*A.x+this->b*A.y+this->c;
 	}
-	bool sameSide(TPoint A, TPoint B) {
-		return this->calc(A)*this->calc(B) >= 0;
+};
+
+struct PointList {
+	static const int BLOCKSIZE = 1024;
+
+	TPoint* points;
+	int N;
+
+	PointList() {
+		this->N = 0;
+		this->points = NULL;
+	}
+
+	void addPoint(TPoint A) {
+		if (N%BLOCKSIZE == 0) {
+			this->N += PointList::BLOCKSIZE;
+			this->points = (TPoint*)realloc(this->points, (this->N+PointList::BLOCKSIZE)*sizeof(TPoint));
+		}
+		this->points[this->N++] = A;
+	}
+
+	~PointList() {
+		free(points);
 	}
 };
 
 
 struct Polygon {
 	int N;
-	TPoint* P;	
+	int* P;
 	
-	bool pointInPolygon(TPoint p) {
-		for (int i = 0; i < N; ++i) {
-			TLine L(P[i], P[(i+1)%N]);
-			if (!L.sameSide(P[(i+2)%N], p))
-				return false;
-		}
-		return true;
+	void setSpace(int n) {
+		this->N = n;
+		this->P = (int*)calloc(n, sizeof(int));
 	}
-
+	
 	~Polygon() {
-		delete[] P;
+		free(P);
 	}
 };
 
