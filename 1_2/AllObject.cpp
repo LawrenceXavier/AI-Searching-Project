@@ -57,6 +57,14 @@ AllObject::AllObject(const char* INPUT_FILE_NAME) {
 	fclose(fi);
 }
 
+double AllObject::getDist(int i, int j) {
+	return this->L->getDist(i, j);
+}
+
+double AllObject::getDist(int i) {
+	return this->L->getDist(i, this->G);
+}
+
 AllObject::~AllObject() {
 	delete this->L;
 	for (int i = 0; i < N; ++i)

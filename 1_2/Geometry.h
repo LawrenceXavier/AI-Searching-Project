@@ -41,6 +41,9 @@ struct PointList {
 
 	void addPoint(TPoint A);
 
+	// get distance between points[i] and points[j]	
+	double getDist(int i, int j);
+
 	~PointList();
 };
 

@@ -55,6 +55,10 @@ void PointList::addPoint(TPoint A) {
 	this->points[this->N++] = A;
 }
 
+double PointList::getDist(int i, int j) {
+	return this->points[i].dist(this->points[j]);
+}
+
 PointList::~PointList() {
 	free(this->points);
 }
