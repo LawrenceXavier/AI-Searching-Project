@@ -3,6 +3,14 @@
 #include <cstdio>
 #include <cstdlib>
 
+bool less(double x, double y) {
+	return x-y < -eps;
+}
+
+bool equal(double x, double y) {
+	return !(less(x, y) || less(y, x));
+}
+
 pcoor sqr(pcoor x) {
 	return x*x;
 }
@@ -10,23 +18,23 @@ pcoor sqr(pcoor x) {
 /* Implementation for TPoint */
 
 TPoint::TPoint(FILE* fi) {
-	fscanf(fi, "%lld %lld", &this->x, &this->y);
+	fscanf(fi, "%lf %lf", &this->x, &this->y);
 }
 
 TPoint TPoint::operator + (TPoint other) {	
-	return TPoint(this->x+other.x, this->y+other.y);
+	return TPoint(this->x + other.x, this->y + other.y);
 }
 
 TPoint TPoint::operator - (TPoint other) {	
-	return TPoint(other.x-this->x, other.y-this->y);
+	return TPoint(other.x - this->x, other.y - this->y);
 }
 
 double TPoint::dist() {
-	return sqrt(sqr(this->x)+sqr(this->y));
+	return sqrt(sqr(this->x) + sqr(this->y));
 }
 
 double TPoint::dist(TPoint other) {
-	return ((*this)-other).dist();
+	return ((*this) - other).dist();
 }
 
 /* ------------------------- */
@@ -34,16 +42,25 @@ double TPoint::dist(TPoint other) {
 /* Implementation for TLine */
 
 TLine::TLine(TPoint A, TPoint B) {
-	this->a = (A.y-B.y);
-	this->b = -(A.x-B.x);
-	this->c = A.x*B.y-A.y*B.x;
+	this->a = B.y - A.y;
+	this->b = A.x - B.x;
+	this->c = A.x*B.y - A.y*B.x;
 }
 
 pcoor TLine::calc(TPoint A) {
-	return this->a*A.x+this->b*A.y+this->c;
+	return this->a*A.x + this->b*A.y - this->c;
+}
+
+bool TLine::sameSide(TPoint A, TPoint B) {
+	pcoor v1 = this->calc(A), v2 = this->calc(B);
+	return less(v1, 0.0) == less(v2, 0.0);
 }
 
 /* ------------------------- */
+
+bool segmentIntersect(TPoint A, TPoint B, TPoint C, TPoint D) {
+	return !TLine(A, B).sameSide(C, D) && !TLine(C, D).sameSide(A, B);
+}
 
 /* Implementation for PointList */
 

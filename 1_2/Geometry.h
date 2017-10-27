@@ -4,7 +4,13 @@
 #include <cstdio>
 
 typedef long long LL;
-typedef LL pcoor;
+typedef double pcoor;
+
+const double Inf = 1E6;
+const double eps = 1E-6;
+
+bool less(double x, double y); 
+bool equal(double x, double y);
 
 struct TPoint {
 	pcoor x, y;
@@ -23,14 +29,18 @@ struct TPoint {
 };
 
 struct TLine {		
-	pcoor a, b, c;	// ax+by+c = 0
+	pcoor a, b, c;	// ax + by = c <=> ax + by - c = 0
 	TLine() {}
 	TLine(pcoor _a, pcoor _b, pcoor _c): a(_a), b(_b), c(_c) {}
 	TLine(TPoint A, TPoint B);
 
 	pcoor calc(TPoint A); 
+	bool sameSide(TPoint A, TPoint B);
 };
 
+// Check whether segment AB and segment CD have common point(s)
+bool segmentIntersect(TPoint A, TPoint B, TPoint C, TPoint D);
+ 
 struct PointList {
 	static const int BLOCKSIZE = 1024;
 

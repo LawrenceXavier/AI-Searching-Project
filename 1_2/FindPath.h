@@ -11,17 +11,6 @@
 
 typedef std::pair<double, int> pdi;
 
-const double Inf = 1E6;
-const double eps = 1E-6;
-
-bool less(double x, double y) {
-	return x-y < -eps;
-}
-
-bool equal(double x, double y) {
-	return !(less(x, y) || less(y, x));
-}
-
 struct FindPath {
 	AllObject* allObj;
 
@@ -30,6 +19,11 @@ struct FindPath {
 	}
 
 	int getAdjList(int* adj, int u) {
+		int m = 0;
+		for (int v = 0; v < this->allObj->L->N; ++v) {
+			
+			
+		}
 		return 0;
 	}
 
