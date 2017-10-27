@@ -17,7 +17,9 @@ struct TPoint {
 	// operators for vector 
 	TPoint operator + (TPoint other);
 	TPoint operator - (TPoint other);
-
+	
+	double dist();
+	double dist(TPoint other);
 };
 
 struct TLine {		

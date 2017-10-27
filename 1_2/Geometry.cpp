@@ -1,6 +1,11 @@
 #include "Geometry.h"
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
+
+pcoor sqr(pcoor x) {
+	return x*x;
+}
 
 /* Implementation for TPoint */
 
@@ -14,6 +19,14 @@ TPoint TPoint::operator + (TPoint other) {
 
 TPoint TPoint::operator - (TPoint other) {	
 	return TPoint(other.x-this->x, other.y-this->y);
+}
+
+double TPoint::dist() {
+	return sqrt(sqr(this->x)+sqr(this->y));
+}
+
+double TPoint::dist(TPoint other) {
+	return ((*this)-other).dist();
 }
 
 /* ------------------------- */

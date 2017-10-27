@@ -1,6 +1,7 @@
 #ifndef FIND_PATH_INCLUDED
 #define FIND_PATH_INCLUDED
 
+#include "AllObject.h"
 #include <cstdlib>
 #include <queue>
 #include <vector>
@@ -30,8 +31,8 @@ struct FindPath {
 			marked[u] = false;
 		}
 		
-		
-		PQ.push
+		dis[this->allObj->S] = 0.0;
+//		PQ.push(std::make_pair(
 	}
 };
 
