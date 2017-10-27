@@ -7,7 +7,7 @@ fi
 # Compile project
 echo "Compiling..." 
 
-g++ -g -O2 -std=gnu++14 -static -o main main.cpp 
+g++ -g -O2 -std=gnu++14 -static -o main Geometry.cpp AllObject.cpp main.cpp
 
 echo "Finished compiling"
 
