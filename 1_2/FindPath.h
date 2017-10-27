@@ -1,6 +1,7 @@
 #ifndef FIND_PATH_INCLUDED
 #define FIND_PATH_INCLUDED
 
+#include "Geometry.h"
 #include "AllObject.h"
 #include <cstdlib>
 #include <queue>
@@ -20,11 +21,19 @@ struct FindPath {
 
 	int getAdjList(int* adj, int u) {
 		int m = 0;
-		for (int v = 0; v < this->allObj->L->N; ++v) {
-			
+		for (int v = 0; v < this->allObj->L->N; ++v) if (v != u) {
+			bool acceptable = true;
+			for (int i = 0; acceptable && i < this->allObj->N; ++i)
+				for (int j = 0, sz = this->allObj->O[i]->N; acceptable && j < sz; ++j) {
+					if (this->allObj->checkSegmentIntersect(this->allObj->O[i]->P[j], this->allObj->O[i]->P[(j+1)%sz], u, v)) {
+						acceptable = false;
+					}
+				}
+			if (acceptable) 
+				adj[m++] = v;
 			
 		}
-		return 0;
+		return m;
 	}
 
 	void search() {

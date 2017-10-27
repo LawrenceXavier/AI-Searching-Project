@@ -65,6 +65,10 @@ double AllObject::getDist(int i) {
 	return this->L->getDist(i, this->G);
 }
 
+bool AllObject::checkSegmentIntersect(int i, int j, int k, int t) {
+	return this->L->checkSegmentIntersect(i, j, k, t);
+}
+
 AllObject::~AllObject() {
 	delete this->L;
 	for (int i = 0; i < N; ++i)

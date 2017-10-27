@@ -53,6 +53,7 @@ struct PointList {
 
 	// get distance between points[i] and points[j]	
 	double getDist(int i, int j);
+	bool checkSegmentIntersect(int i, int j, int k, int t);
 
 	~PointList();
 };

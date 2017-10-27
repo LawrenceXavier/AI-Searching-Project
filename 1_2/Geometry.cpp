@@ -76,6 +76,10 @@ double PointList::getDist(int i, int j) {
 	return this->points[i].dist(this->points[j]);
 }
 
+bool PointList::checkSegmentIntersect(int i, int j, int k, int t) {
+	return segmentIntersect(this->points[i], this->points[j], this->points[k], this->points[t]);
+}
+
 PointList::~PointList() {
 	free(this->points);
 }

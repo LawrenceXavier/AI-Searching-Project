@@ -9,10 +9,12 @@ struct AllObject {
 	PointList* L;	// list of points
 	int S, G;	// Start point and Goal point
 	
+	AllObject(const char* INPUT_FILE_NAME);
+	
 	double getDist(int i, int j);	// "adapter" method to L->getDist(i, j)
 	double getDist(int i);	// get distance to Goal (G)	
-
-	AllObject(const char* INPUT_FILE_NAME);
+	bool checkSegmentIntersect(int i, int j, int k, int t); // "adapter" method to L->checkSegmentIntersect(i, j, k, t)
+	
 	~AllObject();
 };
 
