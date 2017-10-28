@@ -78,7 +78,7 @@ pcoor TLine::calc(const TPoint &A) {
 
 bool TLine::sameSide(const TPoint &A, const TPoint &B) {
 	pcoor v1 = this->calc(A), v2 = this->calc(B);
-	return less(v1, 0.0) == less(v2, 0.0);
+	return (v1 >= 0 && v2 >= 0) || (v1 <= 0 && v2 <= 0);
 }
 
 /* ------------------------- */

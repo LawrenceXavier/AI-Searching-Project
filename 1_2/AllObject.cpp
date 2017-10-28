@@ -61,23 +61,17 @@ TPoint AllObject::getPoint(int i) {
 	return this->L->points[i];
 }
 
-double AllObject::pointInPolygon(const TPoint &A, int j) {
+bool AllObject::pointInPolygon(const TPoint &A, int j) {
 	for (int it = 0, sz = this->O[j]->N; it < sz; ++it) {
-		if (this->L->checkSameSide(A, this->O[j]->P[(it+2)%sz], this->O[j]->P[it], this->O[j]->P[(it+1)%sz])) {
-			
-		}
-		else
+		if (!this->L->checkSameSide(A, this->O[j]->P[(it+2)%sz], this->O[j]->P[it], this->O[j]->P[(it+1)%sz])) 
 			return false;
 	}
 	return true;
 }
 
-double AllObject::pointInPolygon(int i, int j) {
+bool AllObject::pointInPolygon(int i, int j) {
 	for (int it = 0, sz = this->O[j]->N; it < sz; ++it) {
-		if (this->L->checkSameSide(i, this->O[j]->P[(it+2)%sz], this->O[j]->P[it], this->O[j]->P[(it+1)%sz])) {
-			
-		}
-		else
+		if (!this->L->checkSameSide(i, this->O[j]->P[(it+2)%sz], this->O[j]->P[it], this->O[j]->P[(it+1)%sz])) 
 			return false;
 	}
 	return true;

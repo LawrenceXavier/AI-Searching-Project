@@ -13,8 +13,8 @@ struct AllObject {
 
 	TPoint getPoint(int i);
 	
-	double pointInPolygon(int i, int j); // check if point i in polygon j?
-	double pointInPolygon(const TPoint &A, int j);	// check if point A in polygon j?
+	bool pointInPolygon(int i, int j); // check if point i in polygon j?
+	bool pointInPolygon(const TPoint &A, int j);	// check if point A in polygon j?
 
 	double getDist(int i, int j);	// "adapter" method to L->getDist(i, j)
 	double getDist(const TPoint &A);
