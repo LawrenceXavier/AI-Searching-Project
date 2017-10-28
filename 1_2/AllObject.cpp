@@ -57,8 +57,38 @@ AllObject::AllObject(const char* INPUT_FILE_NAME) {
 	fclose(fi);
 }
 
+TPoint AllObject::getPoint(int i) {
+	return this->L->points[i];
+}
+
+double AllObject::pointInPolygon(const TPoint &A, int j) {
+	for (int it = 0, sz = this->O[j]->N; it < sz; ++it) {
+		if (this->L->checkSameSide(A, this->O[j]->P[(it+2)%sz], this->O[j]->P[it], this->O[j]->P[(it+1)%sz])) {
+			
+		}
+		else
+			return false;
+	}
+	return true;
+}
+
+double AllObject::pointInPolygon(int i, int j) {
+	for (int it = 0, sz = this->O[j]->N; it < sz; ++it) {
+		if (this->L->checkSameSide(i, this->O[j]->P[(it+2)%sz], this->O[j]->P[it], this->O[j]->P[(it+1)%sz])) {
+			
+		}
+		else
+			return false;
+	}
+	return true;
+}
+
 double AllObject::getDist(int i, int j) {
 	return this->L->getDist(i, j);
+}
+
+double AllObject::getDist(const TPoint &A) {
+	return A.dist(this->getPoint(this->G));
 }
 
 double AllObject::getDist(int i) {

@@ -9,16 +9,26 @@
 #include <functional>
 #include <utility>
 #include <cstring>
+#include <map>
+#include <set>
 
-typedef std::pair<double, int> pdi;
+typedef std::pair<double, TPoint> pdP;
+const int maxXY = 1E5;
+
+const int dx[8] = {-1, -1, -1,  0,  0,  1, 1, 1};
+const int dy[8] = {-1,  0,  1, -1,  1, -1, 0, 1};
 
 struct FindPath {
 	AllObject* allObj;
+	std::priority_queue< pdP, std::vector<pdP>, std::greater<pdP> > PQ;
+	std::set< TPoint > S;
+	std::map< TPoint, double > dis;
+
 
 	FindPath(AllObject* all_obj) {
 		this->allObj = all_obj;
 	}
-
+/*
 	int getAdjList(int* adj, int u) {
 		int m = 0;
 		for (int v = 0; v < this->allObj->L->N; ++v) if (v != u) {
@@ -35,20 +45,29 @@ struct FindPath {
 		}
 		return m;
 	}
+*/
+	int getAdjList(TPoint* adj, const TPoint &u) {
+		int m = 0;
+		for (int i = 0; i < 8; ++i) {
+			TPoint v = u+TPoint(dx[i], dy[i]);
+			if (v.x >= 0 && v.y >= 0 && v.x <= maxXY && v.y <= maxXY)
+				adj[m++] = v;
+		}
+		return m;
+	}	
 
 	void search() {
-		std::priority_queue< pdi, std::vector<pdi>, std::greater<pdi> > PQ;
+		// double* dis = (double*)calloc(this->allObj->L->N, sizeof(double));
+		// bool* marked = (bool*)calloc(this->allObj->L->N, sizeof(bool));
+		// int* adj = (int*)calloc(this->allObj->L->N, sizeof(int));
 		
-		double* dis = (double*)calloc(this->allObj->L->N, sizeof(double));
-		bool* marked = (bool*)calloc(this->allObj->L->N, sizeof(bool));
-		int* adj = (int*)calloc(this->allObj->L->N, sizeof(int));
-		
-		for (int u = 0; u < this->allObj->L->N; ++u) {
-			dis[u] = Inf;
-			marked[u] = false;
-		}
+//		for (int u = 0; u < this->allObj->L->N; ++u) {
+//			dis[u] = Inf;
+//			marked[u] = false;
+//		}
 		
 		dis[this->allObj->S] = 0.0;
+	
 		PQ.push(std::make_pair(this->allObj->getDist(this->allObj->S), this->allObj->S));
 
 		while (!PQ.empty()) {

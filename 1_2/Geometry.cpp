@@ -18,22 +18,47 @@ pcoor sqr(pcoor x) {
 /* Implementation for TPoint */
 
 TPoint::TPoint(FILE* fi) {
-	fscanf(fi, "%lf %lf", &this->x, &this->y);
+	fscanf(fi, "%lld %lld", &this->x, &this->y);
 }
 
-TPoint TPoint::operator + (TPoint other) {	
+TPoint TPoint::operator + (const TPoint &other) const {	
 	return TPoint(this->x + other.x, this->y + other.y);
 }
 
-TPoint TPoint::operator - (TPoint other) {	
+TPoint TPoint::operator - (const TPoint &other) const {	
 	return TPoint(other.x - this->x, other.y - this->y);
 }
 
-double TPoint::dist() {
+bool TPoint::operator < (const TPoint &other) const {
+	if (this->x != other.x) return this->x < other.x;
+	return this->y < other.y;
+}
+
+bool TPoint::operator > (const TPoint &other) const {
+	return other < *this;
+}
+
+bool TPoint::operator == (const TPoint &other) const {
+	return this->x == other.x && this->y == other.y;
+}
+
+bool TPoint::operator >= (const TPoint &other) const {
+	return *this > other || *this == other;
+}
+
+bool TPoint::operator <= (const TPoint &other) const {
+	return *this < other || *this == other;
+}
+
+bool TPoint::operator != (const TPoint &other) const {
+	return *this != other;
+}
+
+double TPoint::dist() const {
 	return sqrt(sqr(this->x) + sqr(this->y));
 }
 
-double TPoint::dist(TPoint other) {
+double TPoint::dist(const TPoint &other) const {
 	return ((*this) - other).dist();
 }
 
@@ -41,17 +66,17 @@ double TPoint::dist(TPoint other) {
 
 /* Implementation for TLine */
 
-TLine::TLine(TPoint A, TPoint B) {
+TLine::TLine(const TPoint &A, const TPoint &B) {
 	this->a = B.y - A.y;
 	this->b = A.x - B.x;
 	this->c = A.x*B.y - A.y*B.x;
 }
 
-pcoor TLine::calc(TPoint A) {
+pcoor TLine::calc(const TPoint &A) {
 	return this->a*A.x + this->b*A.y - this->c;
 }
 
-bool TLine::sameSide(TPoint A, TPoint B) {
+bool TLine::sameSide(const TPoint &A, const TPoint &B) {
 	pcoor v1 = this->calc(A), v2 = this->calc(B);
 	return less(v1, 0.0) == less(v2, 0.0);
 }
@@ -78,6 +103,14 @@ double PointList::getDist(int i, int j) {
 
 bool PointList::checkSegmentIntersect(int i, int j, int k, int t) {
 	return segmentIntersect(this->points[i], this->points[j], this->points[k], this->points[t]);
+}
+
+bool PointList::checkSameSide(const TPoint &A, int j, int k, int t) {
+	return TLine(this->points[k], this->points[t]).sameSide(A, this->points[j]);
+}
+
+bool PointList::checkSameSide(int i, int j, int k, int t) {
+	return TLine(this->points[k], this->points[t]).sameSide(this->points[i], this->points[j]);
 }
 
 PointList::~PointList() {
