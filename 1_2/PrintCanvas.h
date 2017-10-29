@@ -79,7 +79,7 @@ public:
 
 	void printPath(std::vector<TPoint> path) {
 		fprintf(fhtml, "\t\tvar cnt = 0;\n");
-		fprintf(fhtml, "\t\tvar id = setInterval(drawPath, 1000);\n");
+		fprintf(fhtml, "\t\tvar id = setInterval(drawPath, 10);\n");
 		fprintf(fhtml, "\t\tvar pointList = [");
 		for (int i = 0, sz = path.size(); i < sz; ++i) {
 			TPoint cur = convert(path[i]);
