@@ -3,6 +3,8 @@
 
 #include "Geometry.h"
 #include "AllObject.h"
+#include "PrintCanvas.h"
+#include <new>
 #include <cstdlib>
 #include <queue>
 #include <vector>
@@ -25,6 +27,7 @@ struct FindPath {
 	std::set< TPoint > marked;
 	std::map< TPoint, double > dis;
 	std::map< TPoint, TPoint > trace;
+	std::vector< TPoint > path;
 
 	double getDistFromMap(const TPoint &u) {
 		if (this->dis.find(u) != this->dis.end())
@@ -40,13 +43,26 @@ struct FindPath {
 		this->allObj = all_obj;
 	}
 
-	void traceBack(const TPoint &s, const TPoint &g) {
+	std::vector<TPoint> traceBack(const TPoint &s, const TPoint &g) {
+		std::vector<TPoint> res;
 		TPoint u = g;
 		do {
-			printf("%lld %lld\n", u.x, u.y);
+			res.push_back(u);
 			if (u == s) break;
 			u = this->trace[u];
 		} while (true);
+		for (int i = 0, sz = res.size(); i < sz/2; ++i) {
+			u = res[i];
+			res[i] = res[sz-i-1];
+			res[sz-i-1] = u;
+		}
+		return res;
+	}
+
+	void printOut(const char* FILE_NAME) {
+		PrintCanvas* pc = new PrintCanvas(FILE_NAME, allObj);
+		pc->printPath(path);
+		delete pc;
 	}
 
 	int getAdjList(TPoint* adj, const TPoint &u) {
@@ -96,27 +112,8 @@ struct FindPath {
 				}
 			}
 		}
-		traceBack(this->allObj->getPoint(this->allObj->S), this->allObj->getPoint(this->allObj->G));
+		this->path = traceBack(this->allObj->getPoint(this->allObj->S), this->allObj->getPoint(this->allObj->G));
 	}
 };
-
-/*
-	int getAdjList(int* adj, int u) {
-		int m = 0;
-		for (int v = 0; v < this->allObj->L->N; ++v) if (v != u) {
-			bool acceptable = true;
-			for (int i = 0; acceptable && i < this->allObj->N; ++i)
-				for (int j = 0, sz = this->allObj->O[i]->N; acceptable && j < sz; ++j) {
-					if (this->allObj->checkSegmentIntersect(this->allObj->O[i]->P[j], this->allObj->O[i]->P[(j+1)%sz], u, v)) {
-						acceptable = false;
-					}
-				}
-			if (acceptable) 
-				adj[m++] = v;
-			
-		}
-		return m;
-	}
-*/
 
 #endif

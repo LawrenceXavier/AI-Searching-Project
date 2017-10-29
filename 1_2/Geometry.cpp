@@ -26,7 +26,7 @@ TPoint TPoint::operator + (const TPoint &other) const {
 }
 
 TPoint TPoint::operator - (const TPoint &other) const {	
-	return TPoint(other.x - this->x, other.y - this->y);
+	return TPoint(this->x - other.x, this->y - other.y);
 }
 
 bool TPoint::operator < (const TPoint &other) const {

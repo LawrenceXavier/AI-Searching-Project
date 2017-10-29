@@ -10,5 +10,6 @@ int main(int argc, char* argv[]) {
 	AllObject allObj(INPUT_FILE);
 	FindPath fd(&allObj);
 	fd.search();
+	fd.printOut("Output.html");
 	return 0;
 }
