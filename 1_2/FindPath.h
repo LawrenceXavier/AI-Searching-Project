@@ -71,6 +71,16 @@ struct FindPath {
 			TPoint v = u+TPoint(dx[i], dy[i]);
 			if (v.x >= 0 && v.y >= 0 && v.x <= maxXY && v.y <= maxXY) {
 				bool ok = true;
+
+				for (int j = 0, sz = this->allObj->N; ok && j < sz; ++j) {
+					for (int it = 0, szit = this->allObj->O[j]->N; it < szit; ++it) {
+						if (segmentIntersect(u, v, this->allObj->getPoint(this->allObj->O[j]->P[it]), this->allObj->getPoint(this->allObj->O[j]->P[(it+1)%szit]))) {
+							ok = false;
+							break;
+}
+					}
+				}
+				
 				for (int j = 0, sz = this->allObj->N; ok && j < sz; ++j) 
 					if (this->allObj->pointInPolygon(v, j))
 						ok = false;
