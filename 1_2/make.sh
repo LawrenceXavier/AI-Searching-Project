@@ -20,6 +20,16 @@ if [ -f main ]; then
 	./main
 
 	echo "Finished running"
+
+	if [ -f Output.html ]; then
+		read -p "Do you want to open the demo in browser? " -n 1 -r
+		echo # make a blank line 	
+		if [[ $REPLY =~ ^[Yy]$ ]] 
+		then
+			    xdg-open Output.html
+		fi
+
+	fi
 else 
 	echo "Program does not exist"
 fi
