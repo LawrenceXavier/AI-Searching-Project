@@ -68,7 +68,7 @@ void PrintCanvas::drawSG() {
 	fprintf(fhtml, "\t\t// Draw S\n");
 	fprintf(fhtml, "\t\tctx.beginPath();\n");
 	fprintf(fhtml, "\t\tctx.arc(%lld, %lld, 5, 0, 2*Math.PI);\n", cur.x, cur.y);
-	fprintf(fhtml, "\t\tctx.fillStyle = \"Red\";\n");
+	fprintf(fhtml, "\t\tctx.fillStyle = \"Green\";\n");
 	fprintf(fhtml, "\t\tctx.fill();\n");
 	fprintf(fhtml, "\t\tctx.closePath();\n");
 }
@@ -138,5 +138,6 @@ void PrintCanvas::printPath(std::vector<TPoint> path) {
 PrintCanvas::~PrintCanvas() {
 	fprintf(fhtml, "\t</script>\n");
 	fprintf(fhtml, "</body>\n");
+	fprintf(fhtml, "</html>\n");
 	fclose(fhtml);
 }

@@ -5,10 +5,10 @@
 #include <cstdio>
 #include <vector>
 
-const pcoor maxPixel = 600;
-const pcoor szText = 10;
-const pcoor wText = 60;
-const pcoor hText = 20;
+const pcoor maxPixel = 1000;
+const pcoor szText = 20;
+const pcoor wText = 120;
+const pcoor hText = 40;
 
 template<typename T> T min(const T &x, const T &y) { return x < y ? x : y; }
 template<typename T> T max(const T &x, const T &y) { return x > y ? x : y; }
